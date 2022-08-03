@@ -33,17 +33,20 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
         switch (call.method) {
             case "TEST": {
-                try {
-                    sunmiCloudPrinterMethod.setNetPrinter();
-                    sunmiCloudPrinterMethod.connect();
-                    sunmiCloudPrinterMethod.printerInit();
-                    sunmiCloudPrinterMethod.printerText("Test di prova!");
-                    sunmiCloudPrinterMethod.printQrCode("123456789");
-                    sunmiCloudPrinterMethod.lineWrap(3);
-                } catch (PrinterException exception) {
-                    exception.printStackTrace();
-                }
-
+                new Thread(
+                        () -> {
+                            try {
+                                sunmiCloudPrinterMethod.setNetPrinter();
+                                sunmiCloudPrinterMethod.connect();
+//                                sunmiCloudPrinterMethod.printerInit();
+                                sunmiCloudPrinterMethod.printerText("Test di prova!");
+//                    sunmiCloudPrinterMethod.printQrCode("123456789");
+                                sunmiCloudPrinterMethod.lineWrap(3);
+                            } catch (PrinterException exception) {
+                                exception.printStackTrace();
+                            }
+                        }
+                ).start();
             }
 
             default: {

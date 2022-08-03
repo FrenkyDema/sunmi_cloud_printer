@@ -26,4 +26,8 @@ abstract class SunmiCloudPrinterPlatform extends PlatformInterface {
   Future<String?> getPlatformVersion() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+
+  Future<void> printConnectionTest() {
+    throw UnimplementedError('printConnectionTest() has not been implemented.');
+  }
 }

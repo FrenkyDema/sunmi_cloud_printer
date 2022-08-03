@@ -11,7 +11,13 @@ class MethodChannelSunmiCloudPrinter extends SunmiCloudPrinterPlatform {
 
   @override
   Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
+    final version =
+        await methodChannel.invokeMethod<String>('getPlatformVersion');
     return version;
+  }
+
+  @override
+  Future<void> printConnectionTest() async {
+    await methodChannel.invokeMethod("TEST");
   }
 }

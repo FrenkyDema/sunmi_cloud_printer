@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sunmi_cloud_printer/sunmi_cloud_printer.dart';
 
@@ -31,8 +31,8 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      platformVersion =
-          await _sunmiCloudPrinterPlugin.getPlatformVersion() ?? 'Unknown platform version';
+      platformVersion = await _sunmiCloudPrinterPlugin.getPlatformVersion() ??
+          'Unknown platform version';
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
@@ -51,13 +51,19 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
-        ),
-      ),
+          appBar: AppBar(
+            title: const Text('Plugin example app'),
+          ),
+          body: Column(
+            children: [
+              const Spacer(),
+              Text('Running on: $_platformVersion\n'),
+              ElevatedButton(
+                  onPressed: () => _sunmiCloudPrinterPlugin.printConnectionTest(),
+                  child: const Text("Print connection test")),
+              const Spacer(),
+            ],
+          )),
     );
   }
 }

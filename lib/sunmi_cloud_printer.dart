@@ -5,4 +5,8 @@ class SunmiCloudPrinter {
   Future<String?> getPlatformVersion() {
     return SunmiCloudPrinterPlatform.instance.getPlatformVersion();
   }
+
+  Future<void> printConnectionTest() {
+    return SunmiCloudPrinterPlatform.instance.printConnectionTest();
+ }
 }
