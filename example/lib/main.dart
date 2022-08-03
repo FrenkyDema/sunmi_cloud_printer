@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
               const Spacer(),
               Text('Running on: $_platformVersion\n'),
               ElevatedButton(
-                  onPressed: () => _sunmiCloudPrinterPlugin.printConnectionTest(),
+                  onPressed: () => _sunmiCloudPrinterPlugin.(),
                   child: const Text("Print connection test")),
               const Spacer(),
             ],

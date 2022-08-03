@@ -2,6 +2,7 @@ package com.example.sunmi_cloud_printer;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import com.sunmi.externalprinterlibrary.api.ConnectCallback;
 import com.sunmi.externalprinterlibrary.api.PrinterException;
@@ -82,7 +83,7 @@ public class SunmiCloudPrinterMethod {
         SunmiPrinterApi.getInstance().tab();
     }
 
-    public setHorizontalTab(int[] k) {
+    public void setHorizontalTab(int[] k) {
         SunmiPrinterApi.getInstance().setHorizontalTab(k);
     }
 
@@ -98,24 +99,20 @@ public class SunmiCloudPrinterMethod {
         SunmiPrinterApi.getInstance().cutPaper(m, n);
     }
 
-    public void enableBold() throws PrinterException {
-        SunmiPrinterApi.getInstance().enableBold();
+    public void enableBold(Boolean bold) throws PrinterException {
+        SunmiPrinterApi.getInstance().enableBold(bold);
     }
 
-    public void enableDouble() throws PrinterException {
-        SunmiPrinterApi.getInstance().enableDouble();
+    public void enableDouble(Boolean dooble) throws PrinterException {
+        SunmiPrinterApi.getInstance().enableDouble(dooble);
     }
 
-    public void enableUnderline() throws PrinterException {
-        SunmiPrinterApi.getInstance().enableUnderline();
+    public void enableUnderline(Boolean underline) throws PrinterException {
+        SunmiPrinterApi.getInstance().enableUnderline(underline);
     }
 
     public void printBitmap(Bitmap bitmap, int mode) throws PrinterException {
         SunmiPrinterApi.getInstance().printBitmap(bitmap, mode);
-    }
-
-    public void printBitmap2() throws PrinterException {
-        SunmiPrinterApi.getInstance().printBitmap2();
     }
 
     public void printColumnsText(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign) throws PrinterException {
@@ -154,8 +151,5 @@ public class SunmiCloudPrinterMethod {
     public void setFontZoom(int hori, int veri) throws PrinterException {
         SunmiPrinterApi.getInstance().setFontZoom(hori, veri);
     }
-
-}
-
 
 }

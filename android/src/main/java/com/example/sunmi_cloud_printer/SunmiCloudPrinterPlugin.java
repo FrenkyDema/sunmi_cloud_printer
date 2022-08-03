@@ -1,8 +1,15 @@
 package com.example.sunmi_cloud_printer;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.sunmi.externalprinterlibrary.api.PrinterException;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
@@ -32,13 +39,12 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
         switch (call.method) {
-            
+
             case "PRINT_TEXT":
                 String text = call.argument("text");
                 try {
-                    sunmiCloudPrinterMethod.printerText(text);
-                }
-                catch (PrinterException ignored){
+                    sunmiCloudPrinterMethod.printText(text);
+                } catch (PrinterException ignored) {
                     result.success(false);
                     break;
                 }
@@ -48,20 +54,33 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
             case "LINE_WRAP":
                 int nLine = call.argument("line");
                 try {
-                    sunmiCloudPrinterMethod.printerText(nLine);
-                }
-                catch (PrinterException ignored){
+                    sunmiCloudPrinterMethod.lineWrap(nLine);
+                } catch (PrinterException ignored) {
                     result.success(false);
                     break;
                 }
                 result.success(true);
                 break;
 
-            case "PRINT_QRCODE":
-                String data = call.argument("data");
-                int modulesize = call.argument("modulesize");
-                int errorlevel = call.argument("errorlevel");
-                sunmiPrinterMethod.printQRCode(data, modulesize, errorlevel);
+            case "PRINT_BARCODE":
+                String barCodeData = call.argument("data");
+                int barcodeType = call.argument("barcodeType");
+                int textPosition = call.argument("textPosition");
+                int width = call.argument("width");
+                int height = call.argument("height");
+                try {
+                    sunmiCloudPrinterMethod.printBarCode(
+                            barCodeData,
+                            barcodeType,
+                            width,
+                            height,
+                            textPosition
+                    );
+                    sunmiCloudPrinterMethod.lineWrap(1);
+                } catch (PrinterException ignored) {
+                    result.success(false);
+                    break;
+                }
                 result.success(true);
                 break;
 
@@ -72,15 +91,112 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                 int errorlevel = call.argument("errorlevel");
                 try {
                     sunmiCloudPrinterMethod.printQrCode(data, modulesize, errorlevel);
-                }
-                catch (PrinterException ignored){
+                } catch (PrinterException ignored) {
                     result.success(false);
                     break;
                 }
                 result.success(true);
                 break;
 
+            case "RAW_DATA":
+                try {
+                    sunmiCloudPrinterMethod.sendRawData((byte[]) call.argument("data"));
+                } catch (PrinterException ignored) {
+                    result.success(false);
+                    break;
+                }
+                result.success(true);
+                break;
+
+
+            case "FONT_SIZE":
+                int horiZoom = call.argument("hori");
+                int veriZoom = call.argument("veri");
+                try {
+                    sunmiCloudPrinterMethod.setFontZoom(horiZoom, veriZoom);
+                } catch (PrinterException ignored) {
+                    result.success(false);
+                    break;
+                }
+                result.success(true);
+                break;
+
+            case "SET_ALIGNMENT":
+                int alignment = call.argument("alignment");
+                try {
+                    sunmiCloudPrinterMethod.setAlignMode(alignment);
+                } catch (PrinterException ignored) {
+                    result.success(false);
+                    break;
+                }
+                result.success(true);
+                break;
+
+            case "PRINT_IMAGE":
+                byte[] bytes = call.argument("bitmap");
+                int mode = call.argument("mode");
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                try {
+                    sunmiCloudPrinterMethod.printBitmap(bitmap, mode);
+                } catch (PrinterException ignored) {
+                    result.success(false);
+                    break;
+                }
+                result.success(true);
+                break;
+
+            case "ENTER_PRINTER_BUFFER":
+                try {
+                    sunmiCloudPrinterMethod.startTransBuffer();
+                } catch (PrinterException ignored) {
+                    result.success(false);
+                    break;
+                }
+                result.success(true);
+                break;
+
+            case "EXIT_PRINTER_BUFFER":
+                try {
+                    sunmiCloudPrinterMethod.endTransBuffer();
+                } catch (PrinterException ignored) {
+                    result.success(false);
+                    break;
+                }
+                result.success(true);
+                break;
+
+            case "PRINT_ROW":
+                String colsStr = call.argument("cols");
+
+                try {
+                    JSONArray cols = new JSONArray(colsStr);
+                    String[] colsText = new String[cols.length()];
+                    int[] colsWidth = new int[cols.length()];
+                    int[] colsAlign = new int[cols.length()];
+                    for (int i = 0; i < cols.length(); i++) {
+                        JSONObject col = cols.getJSONObject(i);
+                        String textColumn = col.getString("text");
+                        int widthColumn = col.getInt("width");
+                        int alignColumn = col.getInt("align");
+                        colsText[i] = textColumn;
+                        colsWidth[i] = widthColumn;
+                        colsAlign[i] = alignColumn;
+                    }
+
+                    sunmiCloudPrinterMethod.printColumnsText(colsText, colsWidth, colsAlign);
+                } catch (PrinterException ignored) {
+                    result.success(false);
+                    break;
+                } catch (Exception err) {
+                    Log.d("SunmiPrinter", err.getMessage());
+                }
+                result.success(true);
+                break;
+
+
             default: {
+                result.notImplemented();
+                break;
             }
         }
 
