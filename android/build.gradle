@@ -28,8 +28,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 21
     }
 }
+dependencies {
+    implementation 'com.sunmi:external-printerlibrary:1.0.10'
+}
+
