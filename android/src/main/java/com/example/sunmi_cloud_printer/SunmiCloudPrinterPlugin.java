@@ -32,26 +32,58 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
         switch (call.method) {
-            case "TEST": {
-                new Thread(
-                        () -> {
-                            try {
-                                sunmiCloudPrinterMethod.setNetPrinter();
-                                sunmiCloudPrinterMethod.connect();
-//                                sunmiCloudPrinterMethod.printerInit();
-                                sunmiCloudPrinterMethod.printerText("Test di prova!");
-//                    sunmiCloudPrinterMethod.printQrCode("123456789");
-                                sunmiCloudPrinterMethod.lineWrap(3);
-                            } catch (PrinterException exception) {
-                                exception.printStackTrace();
-                            }
-                        }
-                ).start();
-            }
+            
+            case "PRINT_TEXT":
+                String text = call.argument("text");
+                try {
+                    sunmiCloudPrinterMethod.printerText(text);
+                }
+                catch (PrinterException ignored){
+                    result.success(false);
+                    break;
+                }
+                result.success(true);
+                break;
+
+            case "LINE_WRAP":
+                int nLine = call.argument("line");
+                try {
+                    sunmiCloudPrinterMethod.printerText(nLine);
+                }
+                catch (PrinterException ignored){
+                    result.success(false);
+                    break;
+                }
+                result.success(true);
+                break;
+
+            case "PRINT_QRCODE":
+                String data = call.argument("data");
+                int modulesize = call.argument("modulesize");
+                int errorlevel = call.argument("errorlevel");
+                sunmiPrinterMethod.printQRCode(data, modulesize, errorlevel);
+                result.success(true);
+                break;
+
+
+            case "PRINT_QRCODE":
+                String data = call.argument("data");
+                int modulesize = call.argument("modulesize");
+                int errorlevel = call.argument("errorlevel");
+                try {
+                    sunmiCloudPrinterMethod.printQrCode(data, modulesize, errorlevel);
+                }
+                catch (PrinterException ignored){
+                    result.success(false);
+                    break;
+                }
+                result.success(true);
+                break;
 
             default: {
             }
         }
+
     }
 
     @Override

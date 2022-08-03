@@ -10,6 +10,12 @@ class MockSunmiCloudPrinterPlatform
 
   @override
   Future<String?> getPlatformVersion() => Future.value('42');
+
+  @override
+  Future<void> printConnectionTest() {
+    // TODO: implement printConnectionTest
+    throw UnimplementedError();
+  }
 }
 
 void main() {
@@ -19,11 +25,4 @@ void main() {
     expect(initialPlatform, isInstanceOf<MethodChannelSunmiCloudPrinter>());
   });
 
-  test('getPlatformVersion', () async {
-    SunmiCloudPrinter sunmiCloudPrinterPlugin = SunmiCloudPrinter();
-    MockSunmiCloudPrinterPlatform fakePlatform = MockSunmiCloudPrinterPlatform();
-    SunmiCloudPrinterPlatform.instance = fakePlatform;
-  
-    expect(await sunmiCloudPrinterPlugin.getPlatformVersion(), '42');
-  });
 }

@@ -1,12 +1,15 @@
 
-import 'sunmi_cloud_printer_platform_interface.dart';
+import 'package:flutter/services.dart';
+
 
 class SunmiCloudPrinter {
-  Future<String?> getPlatformVersion() {
-    return SunmiCloudPrinterPlatform.instance.getPlatformVersion();
+  static const MethodChannel _channel = MethodChannel('sunmi_cloud_printer');
+
+
+
+  static Future<bool?> initPrinter() async {
+    final bool? status = await _channel.invokeMethod('INIT_PRINTER');
+    return status;
   }
 
-  Future<void> printConnectionTest() {
-    return SunmiCloudPrinterPlatform.instance.printConnectionTest();
- }
 }
