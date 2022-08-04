@@ -38,7 +38,73 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
 
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
+        Log.wtf("Method:", call.method);
         switch (call.method) {
+
+            case "INIT_PRINTER":
+                try {
+                    sunmiCloudPrinterMethod.printerInit();
+                } catch (PrinterException ignored) {
+                    result.success(false);
+                    break;
+                }
+                result.success(true);
+                break;
+
+            case "GET_UPDATE_PRINTER":
+                int status_code = -1;
+                try {
+                    status_code = sunmiCloudPrinterMethod.getPrinterStatus();
+                } catch (PrinterException ignored) {
+                }
+
+                String status_msg = "";
+
+                // response printer status
+                switch (status_code) {
+                    case 0:
+                        status_msg = "ERROR";
+                        break;
+                    case 1:
+                        status_msg = "NORMAL";
+                        break;
+                    case 2:
+                        status_msg = "ABNORMAL_COMMUNICATION";
+                        break;
+                    case 3:
+                        status_msg = "OUT_OF_PAPER";
+                        break;
+                    case 4:
+                        status_msg = "PREPARING";
+                        break;
+                    case 5:
+                        status_msg = "OVERHEATED";
+                        break;
+                    case 6:
+                        status_msg = "OPEN_THE_LID";
+                        break;
+                    case 7:
+                        status_msg = "PAPER_CUTTER_ABNORMAL";
+                        break;
+                    case 8:
+                        status_msg = "PAPER_CUTTER_RECOVERED";
+                        break;
+                    case 9:
+                        status_msg = "NO_BLACK_MARK";
+                        break;
+                    case 505:
+                        status_msg = "NO_PRINTER_DETECTED";
+                        break;
+                    case 507:
+                        status_msg = "FAILED_TO_UPGRADE_FIRMWARE";
+                        break;
+                    default:
+                        status_msg = "EXCEPTION";
+                }
+
+                result.success(status_msg);
+                break;
+
 
             case "PRINT_TEXT":
                 String text = call.argument("text");
@@ -146,8 +212,9 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                 break;
 
             case "ENTER_PRINTER_BUFFER":
+                Boolean clearEnter = call.argument("clearEnter");
                 try {
-                    sunmiCloudPrinterMethod.startTransBuffer();
+                    sunmiCloudPrinterMethod.startTransBuffer(clearEnter);
                 } catch (PrinterException ignored) {
                     result.success(false);
                     break;

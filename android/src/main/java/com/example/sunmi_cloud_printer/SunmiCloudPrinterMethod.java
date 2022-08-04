@@ -83,7 +83,7 @@ public class SunmiCloudPrinterMethod {
         SunmiPrinterApi.getInstance().tab();
     }
 
-    public void setHorizontalTab(int[] k) {
+    public void setHorizontalTab(int[] k) throws PrinterException {
         SunmiPrinterApi.getInstance().setHorizontalTab(k);
     }
 
@@ -124,8 +124,8 @@ public class SunmiCloudPrinterMethod {
         SunmiPrinterApi.getInstance().endTransBuffer();
     }
 
-    public void startTransBuffer() throws PrinterException {
-        SunmiPrinterApi.getInstance().startTransBuffer();
+    public void startTransBuffer(Boolean clear) throws PrinterException {
+        SunmiPrinterApi.getInstance().startTransBuffer(clear);
     }
 
     public int getPrinterStatus() throws PrinterException {
@@ -151,5 +151,4 @@ public class SunmiCloudPrinterMethod {
     public void setFontZoom(int hori, int veri) throws PrinterException {
         SunmiPrinterApi.getInstance().setFontZoom(hori, veri);
     }
-
 }
