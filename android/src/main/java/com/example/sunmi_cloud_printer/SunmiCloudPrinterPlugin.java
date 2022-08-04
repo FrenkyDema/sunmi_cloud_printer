@@ -2,6 +2,7 @@ package com.example.sunmi_cloud_printer;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -40,6 +41,27 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
         Log.wtf("Method:", call.method);
         switch (call.method) {
+
+            case "SET_NET_PRINTER":
+                String ip = call.argument("ip");
+                try {
+                    sunmiCloudPrinterMethod.setNetPrinter(ip);
+                } catch (PrinterException ignored) {
+                    result.success(false);
+                    break;
+                }
+                result.success(true);
+                break;
+
+            case "CONNECT":
+                try {
+                    sunmiCloudPrinterMethod.connect();
+                } catch (PrinterException ignored) {
+                    result.success(false);
+                    break;
+                }
+                result.success(true);
+                break;
 
             case "INIT_PRINTER":
                 try {
@@ -111,6 +133,7 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                 try {
                     sunmiCloudPrinterMethod.printText(text);
                 } catch (PrinterException ignored) {
+                    ignored.printStackTrace();
                     result.success(false);
                     break;
                 }
@@ -118,7 +141,7 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                 break;
 
             case "LINE_WRAP":
-                int nLine = call.argument("line");
+                int nLine = call.argument("lines");
                 try {
                     sunmiCloudPrinterMethod.lineWrap(nLine);
                 } catch (PrinterException ignored) {

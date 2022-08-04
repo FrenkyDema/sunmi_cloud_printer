@@ -7,7 +7,6 @@ import 'package:sunmi_cloud_printer/sunmi_style.dart';
 import 'column_maker.dart';
 import 'enums.dart';
 
-
 class SunmiCloudPrinter {
   static final Map _printerStatus = {
     'ERROR': 'Something went wrong.',
@@ -25,9 +24,16 @@ class SunmiCloudPrinter {
     'EXCEPTION': 'Unknown Error code',
   };
 
-
   static const MethodChannel _channel = MethodChannel('sunmi_cloud_printer');
 
+  static Future<void> setNetPrinter(String ip) async {
+    Map<String, dynamic> arguments = <String, dynamic>{"ip": ip};
+    await _channel.invokeMethod('SET_NET_PRINTER', arguments);
+  }
+
+  static Future<void> connect() async {
+    await _channel.invokeMethod('CONNECT');
+  }
 
   static Future<bool?> initPrinter() async {
     final bool? status = await _channel.invokeMethod('INIT_PRINTER');
@@ -146,7 +152,7 @@ class SunmiCloudPrinter {
   ///With this method you can print a qrcode with some errorLevel and size.
   static Future<void> printQRCode(String data,
       {int size = 5,
-        SunmiQrcodeLevel errorLevel = SunmiQrcodeLevel.LEVEL_H}) async {
+      SunmiQrcodeLevel errorLevel = SunmiQrcodeLevel.LEVEL_H}) async {
     int _errorlevel = 3;
     switch (errorLevel) {
       case SunmiQrcodeLevel.LEVEL_L:
@@ -176,10 +182,10 @@ class SunmiCloudPrinter {
   ///With this method you can print a barcode with any type described below or in the enum section
   static Future<void> printBarCode(String data,
       {SunmiBarcodeType barcodeType = SunmiBarcodeType.CODE128,
-        int height = 162,
-        int width = 2,
-        SunmiBarcodeTextPos textPosition =
-            SunmiBarcodeTextPos.TEXT_ABOVE}) async {
+      int height = 162,
+      int width = 2,
+      SunmiBarcodeTextPos textPosition =
+          SunmiBarcodeTextPos.TEXT_ABOVE}) async {
     int _codeType = 8;
     int _textPosition = 8;
     switch (barcodeType) {
@@ -413,5 +419,4 @@ class SunmiCloudPrinter {
   static Future<String> printerVersion() async {
     return await _channel.invokeMethod("PRINTER_VERSION");
   }
-
 }

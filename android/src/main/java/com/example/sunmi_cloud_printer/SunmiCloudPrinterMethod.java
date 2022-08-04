@@ -3,6 +3,8 @@ package com.example.sunmi_cloud_printer;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Looper;
+import android.widget.Toast;
 
 import com.sunmi.externalprinterlibrary.api.ConnectCallback;
 import com.sunmi.externalprinterlibrary.api.PrinterException;
@@ -31,35 +33,75 @@ public class SunmiCloudPrinterMethod {
         }
     }
 
-    public void setNetPrinter() throws PrinterException {
-        String ip = "192.168.2.93";
+    public void setNetPrinter(String ip) throws PrinterException {
         SunmiPrinterApi.getInstance().setPrinter(SunmiPrinter.SunmiNetPrinter, ip);
     }
 
     public void connect() throws PrinterException {
+        System.out.println("Connection...");
         if (!SunmiPrinterApi.getInstance().isConnected()) {
             SunmiPrinterApi.getInstance().connectPrinter(_context, new ConnectCallback() {
                 @Override
                 public void onFound() {
                     System.out.println("onFound");
+                    Looper.prepare();
+                    Toast.makeText(
+                            _context,
+                            "Sunmi Printer Found",
+                            Toast.LENGTH_LONG
+                    ).show();
+                    Looper.loop();
+                    Looper.myLooper().quitSafely();
+
                 }
 
                 @Override
                 public void onUnfound() {
                     System.out.println("onUnfound");
+                    Looper.prepare();
+                    Toast.makeText(
+                            _context,
+                            "Sunmi Printer Unfound",
+                            Toast.LENGTH_LONG
+                    ).show();
+                    Looper.loop();
+                    Looper.myLooper().quitSafely();
                 }
 
                 @Override
                 public void onConnect() {
                     System.out.println("onConnect");
+                    Looper.prepare();
+                    Toast.makeText(
+                            _context,
+                            "Sunmi Printer Connected",
+                            Toast.LENGTH_LONG
+                    ).show();
+                    Looper.loop();
+                    Looper.myLooper().quitSafely();
                 }
 
                 @Override
                 public void onDisconnect() {
                     System.out.println("onDisconnect");
+                    Looper.prepare();
+                    Toast.makeText(
+                            _context,
+                            "Sunmi Printer Disconnected",
+                            Toast.LENGTH_LONG
+                    ).show();
+                    Looper.loop();
+                    Looper.myLooper().quitSafely();
                 }
 
             });
+        }else{
+            System.out.println("Already connected");
+            Toast.makeText(
+                    _context,
+                    "Already connected",
+                    Toast.LENGTH_LONG
+            ).show();
         }
     }
 
