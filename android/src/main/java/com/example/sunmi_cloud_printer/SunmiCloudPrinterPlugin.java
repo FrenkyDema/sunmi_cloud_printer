@@ -2,12 +2,9 @@ package com.example.sunmi_cloud_printer;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-
-import com.sunmi.externalprinterlibrary.api.PrinterException;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -46,7 +43,7 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                 String ip = call.argument("ip");
                 try {
                     sunmiCloudPrinterMethod.setNetPrinter(ip);
-                } catch (PrinterException ignored) {
+                } catch (Exception ignored) {
                     result.success(false);
                     break;
                 }
@@ -56,7 +53,7 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
             case "CONNECT":
                 try {
                     sunmiCloudPrinterMethod.connect();
-                } catch (PrinterException ignored) {
+                } catch (Exception ignored) {
                     result.success(false);
                     break;
                 }
@@ -66,7 +63,7 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
             case "INIT_PRINTER":
                 try {
                     sunmiCloudPrinterMethod.printerInit();
-                } catch (PrinterException ignored) {
+                } catch (Exception ignored) {
                     result.success(false);
                     break;
                 }
@@ -77,7 +74,7 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                 int status_code = -1;
                 try {
                     status_code = sunmiCloudPrinterMethod.getPrinterStatus();
-                } catch (PrinterException ignored) {
+                } catch (Exception ignored) {
                 }
 
                 String status_msg = "";
@@ -132,7 +129,7 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                 String text = call.argument("text");
                 try {
                     sunmiCloudPrinterMethod.printText(text);
-                } catch (PrinterException ignored) {
+                } catch (Exception ignored) {
                     ignored.printStackTrace();
                     result.success(false);
                     break;
@@ -144,7 +141,7 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                 int nLine = call.argument("lines");
                 try {
                     sunmiCloudPrinterMethod.lineWrap(nLine);
-                } catch (PrinterException ignored) {
+                } catch (Exception ignored) {
                     result.success(false);
                     break;
                 }
@@ -166,7 +163,7 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                             textPosition
                     );
                     sunmiCloudPrinterMethod.lineWrap(1);
-                } catch (PrinterException ignored) {
+                } catch (Exception ignored) {
                     result.success(false);
                     break;
                 }
@@ -180,7 +177,7 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                 int errorlevel = call.argument("errorlevel");
                 try {
                     sunmiCloudPrinterMethod.printQrCode(data, modulesize, errorlevel);
-                } catch (PrinterException ignored) {
+                } catch (Exception ignored) {
                     result.success(false);
                     break;
                 }
@@ -190,7 +187,7 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
             case "RAW_DATA":
                 try {
                     sunmiCloudPrinterMethod.sendRawData((byte[]) call.argument("data"));
-                } catch (PrinterException ignored) {
+                } catch (Exception ignored) {
                     result.success(false);
                     break;
                 }
@@ -203,7 +200,7 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                 int veriZoom = call.argument("veri");
                 try {
                     sunmiCloudPrinterMethod.setFontZoom(horiZoom, veriZoom);
-                } catch (PrinterException ignored) {
+                } catch (Exception ignored) {
                     result.success(false);
                     break;
                 }
@@ -214,7 +211,7 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                 int alignment = call.argument("alignment");
                 try {
                     sunmiCloudPrinterMethod.setAlignMode(alignment);
-                } catch (PrinterException ignored) {
+                } catch (Exception ignored) {
                     result.success(false);
                     break;
                 }
@@ -227,7 +224,7 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 try {
                     sunmiCloudPrinterMethod.printBitmap(bitmap, mode);
-                } catch (PrinterException ignored) {
+                } catch (Exception ignored) {
                     result.success(false);
                     break;
                 }
@@ -238,7 +235,7 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                 Boolean clearEnter = call.argument("clearEnter");
                 try {
                     sunmiCloudPrinterMethod.startTransBuffer(clearEnter);
-                } catch (PrinterException ignored) {
+                } catch (Exception ignored) {
                     result.success(false);
                     break;
                 }
@@ -248,7 +245,7 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
             case "EXIT_PRINTER_BUFFER":
                 try {
                     sunmiCloudPrinterMethod.endTransBuffer();
-                } catch (PrinterException ignored) {
+                } catch (Exception ignored) {
                     result.success(false);
                     break;
                 }
@@ -274,11 +271,9 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                     }
 
                     sunmiCloudPrinterMethod.printColumnsText(colsText, colsWidth, colsAlign);
-                } catch (PrinterException ignored) {
+                } catch (Exception ignored) {
                     result.success(false);
                     break;
-                } catch (Exception err) {
-                    Log.d("SunmiPrinter", err.getMessage());
                 }
                 result.success(true);
                 break;
