@@ -32,15 +32,17 @@ public class Utilities {
         return Optional.empty();
     }
 
-    public static void runFunctionWithException(Runnable function) throws PrinterException {
+    public static void runFunctionWithException(ThrowingRunnable function) throws PrinterException {
         try {
             CompletableFuture.supplyAsync(() -> {
                 try {
-                    function.run();
+                    function.tryRun();
                 } catch (PrinterException ex) {
                     throw new CompletionException(ex);
                 } catch (Exception ignored) {
                     ignored.printStackTrace();
+                } catch (Throwable e) {
+                    throw new RuntimeException(e);
                 }
                 return null;
             }).join();
@@ -55,3 +57,5 @@ public class Utilities {
     }
 
 }
+
+
