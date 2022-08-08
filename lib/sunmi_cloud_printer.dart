@@ -130,10 +130,10 @@ class SunmiCloudPrinter {
   ///
   ///This method will print a row based in a list of [ColumnMaker].
   static Future<void> printRow({required List<ColumnMaker> cols}) async {
-    final _jsonCols = List<Map<String, String>>.from(
+    final jsonCols = List<Map<String, String>>.from(
         cols.map<Map<String, String>>((ColumnMaker col) => col.toJson()));
     Map<String, dynamic> arguments = <String, dynamic>{
-      "cols": json.encode(_jsonCols)
+      "cols": json.encode(jsonCols)
     };
     await _channel.invokeMethod("PRINT_ROW", arguments);
   }
@@ -153,26 +153,26 @@ class SunmiCloudPrinter {
   static Future<void> printQRCode(String data,
       {int size = 5,
       SunmiQrcodeLevel errorLevel = SunmiQrcodeLevel.LEVEL_H}) async {
-    int _errorlevel = 3;
+    int localErrorLevel = 3;
     switch (errorLevel) {
       case SunmiQrcodeLevel.LEVEL_L:
-        _errorlevel = 0;
+        localErrorLevel = 0;
         break;
       case SunmiQrcodeLevel.LEVEL_M:
-        _errorlevel = 1;
+        localErrorLevel = 1;
 
         break;
       case SunmiQrcodeLevel.LEVEL_Q:
-        _errorlevel = 2;
+        localErrorLevel = 2;
         break;
       case SunmiQrcodeLevel.LEVEL_H:
-        _errorlevel = 3;
+        localErrorLevel = 3;
         break;
     }
     Map<String, dynamic> arguments = <String, dynamic>{
       "data": data,
       'modulesize': size,
-      'errorlevel': _errorlevel
+      'errorlevel': localErrorLevel
     };
     await _channel.invokeMethod("PRINT_QRCODE", arguments);
   }
@@ -186,56 +186,56 @@ class SunmiCloudPrinter {
       int width = 2,
       SunmiBarcodeTextPos textPosition =
           SunmiBarcodeTextPos.TEXT_ABOVE}) async {
-    int _codeType = 8;
-    int _textPosition = 8;
+    int codeType = 8;
+    int localTextPosition = 8;
     switch (barcodeType) {
       case SunmiBarcodeType.UPCA:
-        _codeType = 0;
+        codeType = 0;
         break;
       case SunmiBarcodeType.UPCE:
-        _codeType = 1;
+        codeType = 1;
         break;
       case SunmiBarcodeType.JAN13:
-        _codeType = 2;
+        codeType = 2;
         break;
       case SunmiBarcodeType.JAN8:
-        _codeType = 3;
+        codeType = 3;
         break;
       case SunmiBarcodeType.CODE39:
-        _codeType = 4;
+        codeType = 4;
         break;
       case SunmiBarcodeType.ITF:
-        _codeType = 5;
+        codeType = 5;
         break;
       case SunmiBarcodeType.CODABAR:
-        _codeType = 6;
+        codeType = 6;
         break;
       case SunmiBarcodeType.CODE93:
-        _codeType = 7;
+        codeType = 7;
         break;
       case SunmiBarcodeType.CODE128:
-        _codeType = 8;
+        codeType = 8;
         break;
     }
 
     switch (textPosition) {
       case SunmiBarcodeTextPos.NO_TEXT:
-        _textPosition = 0;
+        localTextPosition = 0;
         break;
       case SunmiBarcodeTextPos.TEXT_ABOVE:
-        _textPosition = 1;
+        localTextPosition = 1;
         break;
       case SunmiBarcodeTextPos.TEXT_UNDER:
-        _textPosition = 2;
+        localTextPosition = 2;
         break;
       case SunmiBarcodeTextPos.BOTH:
-        _textPosition = 3;
+        localTextPosition = 3;
         break;
     }
     Map<String, dynamic> arguments = <String, dynamic>{
       "data": data,
-      'barcodeType': _codeType,
-      'textPosition': _textPosition,
+      'barcodeType': codeType,
+      'textPosition': localTextPosition,
       'width': width,
       'height': height
     };
@@ -367,25 +367,25 @@ class SunmiCloudPrinter {
   ///This method will change the font size , between extra small and extra large.
   ///You can see the sizes below or in the enum file.
   static Future<void> setFontSize(SunmiFontSize size) async {
-    int _fontSize = 24;
+    int fontSize = 24;
     switch (size) {
       case SunmiFontSize.XS:
-        _fontSize = 14;
+        fontSize = 14;
         break;
       case SunmiFontSize.SM:
-        _fontSize = 18;
+        fontSize = 18;
         break;
       case SunmiFontSize.MD:
-        _fontSize = 24;
+        fontSize = 24;
         break;
       case SunmiFontSize.LG:
-        _fontSize = 36;
+        fontSize = 36;
         break;
       case SunmiFontSize.XL:
-        _fontSize = 42;
+        fontSize = 42;
         break;
     }
-    Map<String, dynamic> arguments = <String, dynamic>{"size": _fontSize};
+    Map<String, dynamic> arguments = <String, dynamic>{"size": fontSize};
 
     await _channel.invokeMethod("FONT_SIZE", arguments);
   }

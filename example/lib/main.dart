@@ -39,15 +39,15 @@ class _MyAppState extends State<MyApp> {
             children: [
               const Spacer(),
               ElevatedButton(
-                  onPressed: () => SunmiCloudPrinter.connect(),
+                  onPressed: () async => await SunmiCloudPrinter.connect(),
                   child: const Text("Connect")),
               ElevatedButton(
-                  onPressed: () => SunmiCloudPrinter.initPrinter(),
+                  onPressed: () async => await SunmiCloudPrinter.initPrinter(),
                   child: const Text("Init printer")),
               ElevatedButton(
-                  onPressed: () => {
-                        SunmiCloudPrinter.printText("Connection Test !"),
-                        SunmiCloudPrinter.lineWrap(3),
+                  onPressed: () async => {
+                        await SunmiCloudPrinter.printText("Connection Test !"),
+                        await SunmiCloudPrinter.lineWrap(3),
                       },
                   child: const Text("Print connection test")),
               const Spacer(),
