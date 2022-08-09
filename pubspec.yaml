@@ -1,6 +1,6 @@
 name: sunmi_cloud_printer
 description: "Sunmi support package that allows you to easily interface with your cloud printer"
-version: 0.0.1
+version: 0.0.3
 homepage: https://github.com/FrenkyDema/sunmi_cloud_printer
 
 environment:

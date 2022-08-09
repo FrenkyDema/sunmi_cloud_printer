@@ -1,3 +1,11 @@
+## 0.0.3
+
+Add documentation
+
+## 0.0.2
+
+Call management thanks to a single threaded queue
+
 ## 0.0.1
 
-* TODO: Describe initial release.
+Implementation of basic functions, management of printer calls and related calls to the Sunmi API
