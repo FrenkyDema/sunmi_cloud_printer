@@ -77,7 +77,7 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                 } catch (Exception ignored) {
                 }
 
-                String status_msg = "";
+                String status_msg;
 
                 // response printer status
                 switch (status_code) {
@@ -138,6 +138,7 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                 break;
 
             case "LINE_WRAP":
+                //noinspection ConstantConditions
                 int nLine = call.argument("lines");
                 try {
                     sunmiCloudPrinterMethod.lineWrap(nLine);
@@ -196,10 +197,10 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
 
 
             case "FONT_SIZE":
-                int horiZoom = call.argument("hori");
-                int veriZoom = call.argument("veri");
+                int horizontalZoom = call.argument("hori");
+                int verticalZoom = call.argument("veri");
                 try {
-                    sunmiCloudPrinterMethod.setFontZoom(horiZoom, veriZoom);
+                    sunmiCloudPrinterMethod.setFontZoom(horizontalZoom, verticalZoom);
                 } catch (Exception ignored) {
                     result.success(false);
                     break;

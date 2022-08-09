@@ -22,10 +22,8 @@ public class SunmiCloudPrinterMethod {
     }
 
     public static void setCloudPrinter() throws PrinterException {
-        Utilities.runFunctionWithException(
-                () -> {
-                    SunmiPrinterApi.getInstance().setPrinter(SunmiPrinter.SunmiCloudPrinter);
-                }
+        TaskProvider.runFunctionWithException(
+                () -> SunmiPrinterApi.getInstance().setPrinter(SunmiPrinter.SunmiCloudPrinter)
         );
     }
 
@@ -33,7 +31,7 @@ public class SunmiCloudPrinterMethod {
         List<String> macList = SunmiPrinterApi.getInstance().findBleDevice(_context);
         if (macList.size() > 0) {
             try {
-                Utilities.runFunctionWithException(
+                TaskProvider.runFunctionWithException(
                         () -> SunmiPrinterApi.getInstance().setPrinter(SunmiPrinter.SunmiBlueToothPrinter, macList.get(0))
                 );
             } catch (PrinterException exception) {
@@ -44,7 +42,7 @@ public class SunmiCloudPrinterMethod {
     }
 
     public void setNetPrinter(String ip) throws PrinterException {
-        Utilities.runFunctionWithException(
+        TaskProvider.runFunctionWithException(
                 () -> SunmiPrinterApi.getInstance().setPrinter(SunmiPrinter.SunmiNetPrinter, ip)
         );
     }
@@ -52,7 +50,7 @@ public class SunmiCloudPrinterMethod {
     public void connect() throws PrinterException {
         System.out.println("Connection...");
         if (!SunmiPrinterApi.getInstance().isConnected()) {
-            Utilities.runFunctionWithException(
+            TaskProvider.runFunctionWithException(
                     () -> SunmiPrinterApi.getInstance().connectPrinter(_context, new ConnectCallback() {
                         @Override
                         public void onFound() {
@@ -120,135 +118,135 @@ public class SunmiCloudPrinterMethod {
     }
 
     public void printerInit() throws PrinterException {
-        Utilities.runFunctionWithException(
+        TaskProvider.runFunctionWithException(
                 () -> SunmiPrinterApi.getInstance().printerInit()
         );
     }
 
     public void printText(String text) throws PrinterException {
-        Utilities.runFunctionWithException(
+        TaskProvider.runFunctionWithException(
                 () -> SunmiPrinterApi.getInstance().printText(text)
         );
     }
 
     public void lineWrap(int n) throws PrinterException {
-        Utilities.runFunctionWithException(
+        TaskProvider.runFunctionWithException(
                 () -> SunmiPrinterApi.getInstance().lineWrap(n)
         );
     }
 
     public void pixelWrap(int n) throws PrinterException {
-        Utilities.runFunctionWithException(
+        TaskProvider.runFunctionWithException(
                 () -> SunmiPrinterApi.getInstance().pixelWrap(n)
         );
     }
 
     public void tab() throws PrinterException {
-        Utilities.runFunctionWithException(
+        TaskProvider.runFunctionWithException(
                 () -> SunmiPrinterApi.getInstance().tab()
         );
     }
 
     public void setHorizontalTab(int[] k) throws PrinterException {
-        Utilities.runFunctionWithException(
+        TaskProvider.runFunctionWithException(
                 () -> SunmiPrinterApi.getInstance().setHorizontalTab(k)
         );
     }
 
     public void printQrCode(String data, int modulesize, int errorlevel) throws PrinterException {
-        Utilities.runFunctionWithException(
+        TaskProvider.runFunctionWithException(
                 () -> SunmiPrinterApi.getInstance().printQrCode(data, modulesize, errorlevel)
         );
     }
 
     public void printBarCode(String code, int type, int width, int height, int hriPos) throws PrinterException {
-        Utilities.runFunctionWithException(
+        TaskProvider.runFunctionWithException(
                 () -> SunmiPrinterApi.getInstance().printBarCode(code, type, width, height, hriPos)
         );
     }
 
     public void cutPaper(int m, int n) throws PrinterException {
-        Utilities.runFunctionWithException(
+        TaskProvider.runFunctionWithException(
                 () -> SunmiPrinterApi.getInstance().cutPaper(m, n)
         );
     }
 
     public void enableBold(Boolean bold) throws PrinterException {
-        Utilities.runFunctionWithException(
+        TaskProvider.runFunctionWithException(
                 () -> SunmiPrinterApi.getInstance().enableBold(bold)
         );
     }
 
-    public void enableDouble(Boolean dooble) throws PrinterException {
-        Utilities.runFunctionWithException(
-                () -> SunmiPrinterApi.getInstance().enableDouble(dooble)
+    public void enableDouble(Boolean isDouble) throws PrinterException {
+        TaskProvider.runFunctionWithException(
+                () -> SunmiPrinterApi.getInstance().enableDouble(isDouble)
         );
     }
 
     public void enableUnderline(Boolean underline) throws PrinterException {
-        Utilities.runFunctionWithException(
+        TaskProvider.runFunctionWithException(
                 () -> SunmiPrinterApi.getInstance().enableUnderline(underline)
         );
     }
 
     public void printBitmap(Bitmap bitmap, int mode) throws PrinterException {
-        Utilities.runFunctionWithException(
+        TaskProvider.runFunctionWithException(
                 () -> SunmiPrinterApi.getInstance().printBitmap(bitmap, mode)
         );
     }
 
     public void printColumnsText(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign) throws PrinterException {
-        Utilities.runFunctionWithException(
+        TaskProvider.runFunctionWithException(
                 () -> SunmiPrinterApi.getInstance().printColumnsText(colsTextArr, colsWidthArr, colsAlign)
         );
     }
 
     public void endTransBuffer() throws PrinterException {
-        Utilities.runFunctionWithException(
+        TaskProvider.runFunctionWithException(
                 () -> SunmiPrinterApi.getInstance().endTransBuffer()
         );
     }
 
     public void startTransBuffer(Boolean clear) throws PrinterException {
-        Utilities.runFunctionWithException(
+        TaskProvider.runFunctionWithException(
                 () -> SunmiPrinterApi.getInstance().startTransBuffer(clear)
         );
     }
 
     public int getPrinterStatus() throws PrinterException {
-        return Utilities.runFunctionWithException(
+        return TaskProvider.runFunctionWithException(
                 () -> SunmiPrinterApi.getInstance().getPrinterStatus()
         ).orElse(-1);
     }
 
     public boolean isConnected() throws PrinterException {
 
-        return Utilities.runFunctionWithException(
+        return TaskProvider.runFunctionWithException(
                 () -> SunmiPrinterApi.getInstance().isConnected()
         ).orElse(false);
     }
 
     public void sendRawData(byte[] cmd) throws PrinterException {
-        Utilities.runFunctionWithException(
+        TaskProvider.runFunctionWithException(
                 () -> SunmiPrinterApi.getInstance().sendRawData(cmd)
         );
     }
 
     public void setAlignMode(int type) throws PrinterException {
-        Utilities.runFunctionWithException(
+        TaskProvider.runFunctionWithException(
                 () -> SunmiPrinterApi.getInstance().setAlignMode(type)
         );
     }
 
     public void flush() throws PrinterException {
-        Utilities.runFunctionWithException(
+        TaskProvider.runFunctionWithException(
                 () -> SunmiPrinterApi.getInstance().flush()
         );
     }
 
-    public void setFontZoom(int hori, int veri) throws PrinterException {
-        Utilities.runFunctionWithException(
-                () -> SunmiPrinterApi.getInstance().setFontZoom(hori, veri)
+    public void setFontZoom(int horizontal, int vertical) throws PrinterException {
+        TaskProvider.runFunctionWithException(
+                () -> SunmiPrinterApi.getInstance().setFontZoom(horizontal, vertical)
         );
     }
 }

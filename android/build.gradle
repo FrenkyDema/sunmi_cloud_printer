@@ -29,7 +29,7 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
     defaultConfig {
-        minSdkVersion 21
+        minSdk 24
     }
 }
 dependencies {
