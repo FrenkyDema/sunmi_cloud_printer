@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:sunmi_cloud_printer/enums.dart';
 import 'package:sunmi_cloud_printer/sunmi_cloud_printer.dart';
 
 void main() {
@@ -50,7 +51,15 @@ class _MyAppState extends State<MyApp> {
                         await SunmiCloudPrinter.lineWrap(3),
                       },
                   child: const Text("Print connection test")),
+              ElevatedButton(
+                  onPressed: () async => {
+                    await SunmiCloudPrinter.printQRCode('https://canteen.risto.cloud/api/company/service_status', size: 8),
+                    await SunmiCloudPrinter.lineWrap(3),
+                  },
+                  child: const Text("Print Qrcode test")),
               const Spacer(),
+
+
             ],
           )),
     );
