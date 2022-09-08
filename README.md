@@ -6,6 +6,8 @@ A package for 80mm Kitchen Cloud Printer - SUNMI
 
 **THIS PACKAGE WILL WORK ONLY IN ANDROID!**
 
+---
+
 ## What this package do
 
 - [x] Write some text
