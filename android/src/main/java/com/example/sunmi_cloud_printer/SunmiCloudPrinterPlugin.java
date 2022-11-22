@@ -3,29 +3,27 @@ package com.example.sunmi_cloud_printer;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
- * SunmiCloudPrinterPlugin
+ * The Sunmi cloud printer plugin.
  */
 public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler {
-    /// The MethodChannel that will the communication between Flutter and native Android
-    ///
-    /// This local reference serves to register the plugin with the Flutter Engine and unregister it
-    /// when the Flutter Engine is detached from the Activity
     private static SunmiCloudPrinterMethod sunmiCloudPrinterMethod;
     private MethodChannel channel;
 
+    /**
+     * Handle attach to engine event.
+     *
+     * @param flutterPluginBinding the flutter plugin binding
+     */
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "sunmi_cloud_printer");
@@ -34,6 +32,12 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
         channel.setMethodCallHandler(this);
     }
 
+    /**
+     * Handle method calls event.
+     *
+     * @param call   the method call
+     * @param result the result from the call
+     */
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
         Log.wtf("Method:", call.method);
@@ -129,8 +133,8 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                 String text = call.argument("text");
                 try {
                     sunmiCloudPrinterMethod.printText(text);
-                } catch (Exception ignored) {
-                    ignored.printStackTrace();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
                     result.success(false);
                     break;
                 }
@@ -288,8 +292,13 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
 
     }
 
+    /**
+     * Handle detached from engine event.
+     *
+     * @param flutterPluginBinding the flutter plugin binding
+     */
     @Override
-    public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+    public void onDetachedFromEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         channel.setMethodCallHandler(null);
     }
 }

@@ -4,17 +4,26 @@ import com.sunmi.externalprinterlibrary.api.PrinterException;
 
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.Callable;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
+/**
+ * The Task provider class.
+ */
 public class TaskProvider {
 
+    /**
+     * The constant executor.
+     */
     public static final ExecutorService executor = Executors.newSingleThreadExecutor();
 
+    /**
+     * Run function with exception optional.
+     *
+     * @param <Res>    the type parameter
+     * @param function the function
+     * @return the optional
+     * @throws PrinterException the printer exception
+     */
     public static <Res> Optional<Res> runFunctionWithException(Callable<Res> function) throws PrinterException {
         try {
             return Optional.ofNullable(CompletableFuture.supplyAsync(() -> {
@@ -25,8 +34,8 @@ public class TaskProvider {
                         throw Objects.requireNonNull(ex.getCause());
                     } catch (PrinterException printerException) {
                         throw new CompletionException(printerException);
-                    } catch (Throwable ignored) {
-                        ignored.printStackTrace();
+                    } catch (Throwable throwable) {
+                        throwable.printStackTrace();
                     }
                 }
                 return null;
@@ -42,6 +51,12 @@ public class TaskProvider {
         return Optional.empty();
     }
 
+    /**
+     * Run function with exception.
+     *
+     * @param function the function
+     * @throws PrinterException the printer exception
+     */
     public static void runFunctionWithException(ThrowingRunnable function) throws PrinterException {
         try {
             CompletableFuture.supplyAsync(() -> {
@@ -52,8 +67,8 @@ public class TaskProvider {
                         throw Objects.requireNonNull(ex.getCause());
                     } catch (PrinterException printerException) {
                         throw new CompletionException(printerException);
-                    } catch (Throwable ignored) {
-                        ignored.printStackTrace();
+                    } catch (Throwable throwable) {
+                        throwable.printStackTrace();
                     }
                 }
                 return null;

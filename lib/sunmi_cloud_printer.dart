@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
 import 'package:sunmi_cloud_printer/sunmi_style.dart';

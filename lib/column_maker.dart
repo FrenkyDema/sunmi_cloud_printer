@@ -4,10 +4,6 @@ import 'enums.dart';
 /// With this class you can build a column with some text and alignment
 /// This is a good approach if you want to do a receipt like
 /// With [text] , [width] and [align] you can build  a row as you like with any combination of alignment and size<br>
-/// Name  Qtd Value
-///
-/// XXX   2   2.33
-///
 class ColumnMaker {
   String text;
   int width;

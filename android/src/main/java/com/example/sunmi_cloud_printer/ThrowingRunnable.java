@@ -1,5 +1,8 @@
 package com.example.sunmi_cloud_printer;
 
+/**
+ * The interface Throwing runnable.
+ */
 @FunctionalInterface
 public interface ThrowingRunnable extends Runnable {
     private static <E extends Exception> void throwUnchecked(Throwable t) throws E {
@@ -15,5 +18,10 @@ public interface ThrowingRunnable extends Runnable {
         }
     }
 
+    /**
+     * Try run.
+     *
+     * @throws Throwable the throwable
+     */
     void tryRun() throws Throwable;
 }
