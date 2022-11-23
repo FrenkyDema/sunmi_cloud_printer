@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:sunmi_cloud_printer/enums.dart';
 import 'package:sunmi_cloud_printer/sunmi_cloud_printer.dart';
 
 void main() {
