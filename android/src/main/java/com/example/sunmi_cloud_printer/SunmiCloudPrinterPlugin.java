@@ -16,7 +16,7 @@ import org.json.JSONObject;
  * The Sunmi cloud printer plugin.
  */
 public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler {
-    private static SunmiCloudPrinterMethod sunmiCloudPrinterMethod;
+    private SunmiCloudPrinterMethod sunmiCloudPrinterMethod;
     private MethodChannel channel;
 
     /**
@@ -42,8 +42,7 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
         Log.wtf("Method:", call.method);
         switch (call.method) {
-
-            case "SET_NET_PRINTER":
+            case "SET_NET_PRINTER" -> {
                 String ip = call.argument("ip");
                 try {
                     sunmiCloudPrinterMethod.setNetPrinter(ip);
@@ -52,9 +51,8 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                     break;
                 }
                 result.success(true);
-                break;
-
-            case "CONNECT":
+            }
+            case "CONNECT" -> {
                 try {
                     sunmiCloudPrinterMethod.connect();
                 } catch (Exception ignored) {
@@ -62,9 +60,8 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                     break;
                 }
                 result.success(true);
-                break;
-
-            case "INIT_PRINTER":
+            }
+            case "INIT_PRINTER" -> {
                 try {
                     sunmiCloudPrinterMethod.printerInit();
                 } catch (Exception ignored) {
@@ -72,64 +69,33 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                     break;
                 }
                 result.success(true);
-                break;
-
-            case "GET_UPDATE_PRINTER":
+            }
+            case "GET_UPDATE_PRINTER" -> {
                 int status_code = -1;
                 try {
                     status_code = sunmiCloudPrinterMethod.getPrinterStatus();
                 } catch (Exception ignored) {
                 }
-
-                String status_msg;
+                String status_msg = switch (status_code) {
+                    case 0 -> "ERROR";
+                    case 1 -> "NORMAL";
+                    case 2 -> "ABNORMAL_COMMUNICATION";
+                    case 3 -> "OUT_OF_PAPER";
+                    case 4 -> "PREPARING";
+                    case 5 -> "OVERHEATED";
+                    case 6 -> "OPEN_THE_LID";
+                    case 7 -> "PAPER_CUTTER_ABNORMAL";
+                    case 8 -> "PAPER_CUTTER_RECOVERED";
+                    case 9 -> "NO_BLACK_MARK";
+                    case 505 -> "NO_PRINTER_DETECTED";
+                    case 507 -> "FAILED_TO_UPGRADE_FIRMWARE";
+                    default -> "EXCEPTION";
+                };
 
                 // response printer status
-                switch (status_code) {
-                    case 0:
-                        status_msg = "ERROR";
-                        break;
-                    case 1:
-                        status_msg = "NORMAL";
-                        break;
-                    case 2:
-                        status_msg = "ABNORMAL_COMMUNICATION";
-                        break;
-                    case 3:
-                        status_msg = "OUT_OF_PAPER";
-                        break;
-                    case 4:
-                        status_msg = "PREPARING";
-                        break;
-                    case 5:
-                        status_msg = "OVERHEATED";
-                        break;
-                    case 6:
-                        status_msg = "OPEN_THE_LID";
-                        break;
-                    case 7:
-                        status_msg = "PAPER_CUTTER_ABNORMAL";
-                        break;
-                    case 8:
-                        status_msg = "PAPER_CUTTER_RECOVERED";
-                        break;
-                    case 9:
-                        status_msg = "NO_BLACK_MARK";
-                        break;
-                    case 505:
-                        status_msg = "NO_PRINTER_DETECTED";
-                        break;
-                    case 507:
-                        status_msg = "FAILED_TO_UPGRADE_FIRMWARE";
-                        break;
-                    default:
-                        status_msg = "EXCEPTION";
-                }
-
                 result.success(status_msg);
-                break;
-
-
-            case "PRINT_TEXT":
+            }
+            case "PRINT_TEXT" -> {
                 String text = call.argument("text");
                 try {
                     sunmiCloudPrinterMethod.printText(text);
@@ -139,9 +105,8 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                     break;
                 }
                 result.success(true);
-                break;
-
-            case "LINE_WRAP":
+            }
+            case "LINE_WRAP" -> {
                 //noinspection ConstantConditions
                 int nLine = call.argument("lines");
                 try {
@@ -151,9 +116,8 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                     break;
                 }
                 result.success(true);
-                break;
-
-            case "PRINT_BARCODE":
+            }
+            case "PRINT_BARCODE" -> {
                 String barCodeData = call.argument("data");
                 int barcodeType = call.argument("barcodeType");
                 int textPosition = call.argument("textPosition");
@@ -173,10 +137,8 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                     break;
                 }
                 result.success(true);
-                break;
-
-
-            case "PRINT_QRCODE":
+            }
+            case "PRINT_QRCODE" -> {
                 String data = call.argument("data");
                 int modulesize = call.argument("modulesize");
                 int errorlevel = call.argument("errorlevel");
@@ -187,20 +149,17 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                     break;
                 }
                 result.success(true);
-                break;
-
-            case "RAW_DATA":
+            }
+            case "RAW_DATA" -> {
                 try {
-                    sunmiCloudPrinterMethod.sendRawData((byte[]) call.argument("data"));
+                    sunmiCloudPrinterMethod.sendRawData(call.argument("data"));
                 } catch (Exception ignored) {
                     result.success(false);
                     break;
                 }
                 result.success(true);
-                break;
-
-
-            case "FONT_SIZE":
+            }
+            case "FONT_SIZE" -> {
                 int horizontalZoom = call.argument("hori");
                 int verticalZoom = call.argument("veri");
                 try {
@@ -210,9 +169,8 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                     break;
                 }
                 result.success(true);
-                break;
-
-            case "SET_ALIGNMENT":
+            }
+            case "SET_ALIGNMENT" -> {
                 int alignment = call.argument("alignment");
                 try {
                     sunmiCloudPrinterMethod.setAlignMode(alignment);
@@ -221,9 +179,8 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                     break;
                 }
                 result.success(true);
-                break;
-
-            case "PRINT_IMAGE":
+            }
+            case "PRINT_IMAGE" -> {
                 byte[] bytes = call.argument("bitmap");
                 int mode = call.argument("mode");
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
@@ -234,9 +191,8 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                     break;
                 }
                 result.success(true);
-                break;
-
-            case "ENTER_PRINTER_BUFFER":
+            }
+            case "ENTER_PRINTER_BUFFER" -> {
                 Boolean clearEnter = call.argument("clearEnter");
                 try {
                     sunmiCloudPrinterMethod.startTransBuffer(clearEnter);
@@ -245,9 +201,8 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                     break;
                 }
                 result.success(true);
-                break;
-
-            case "EXIT_PRINTER_BUFFER":
+            }
+            case "EXIT_PRINTER_BUFFER" -> {
                 try {
                     sunmiCloudPrinterMethod.endTransBuffer();
                 } catch (Exception ignored) {
@@ -255,11 +210,9 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                     break;
                 }
                 result.success(true);
-                break;
-
-            case "PRINT_ROW":
+            }
+            case "PRINT_ROW" -> {
                 String colsStr = call.argument("cols");
-
                 try {
                     JSONArray cols = new JSONArray(colsStr);
                     String[] colsText = new String[cols.length()];
@@ -281,12 +234,9 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                     break;
                 }
                 result.success(true);
-                break;
-
-
-            default: {
+            }
+            default -> {
                 result.notImplemented();
-                break;
             }
         }
 
