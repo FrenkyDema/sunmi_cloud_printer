@@ -1,4 +1,4 @@
-group 'com.example.sunmi_cloud_printer'
+group 'com.example.lepsi_sunmi_cloud_printer'
 version '1.0'
 
 buildscript {
@@ -24,7 +24,7 @@ apply plugin: 'com.android.library'
 
 android {
 
-    namespace 'com.example.sunmi_cloud_printer'
+    namespace 'com.example.lepsi_sunmi_cloud_printer'
 
     compileSdk 33
 

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:sunmi_cloud_printer/sunmi_style.dart';
+import 'package:lepsi_sunmi_cloud_printer/sunmi_style.dart';
 
 import 'column_maker.dart';
 import 'enums.dart';
@@ -23,7 +23,7 @@ class SunmiCloudPrinter {
     'EXCEPTION': 'Unknown Error code',
   };
 
-  static const MethodChannel _channel = MethodChannel('sunmi_cloud_printer');
+  static const MethodChannel _channel = MethodChannel('lepsi_sunmi_cloud_printer');
 
   static Future<void> setNetPrinter(String ip) async {
     Map<String, dynamic> arguments = <String, dynamic>{"ip": ip};
@@ -129,11 +129,8 @@ class SunmiCloudPrinter {
   ///
   ///This method will print a row based in a list of [ColumnMaker].
   static Future<void> printRow({required List<ColumnMaker> cols}) async {
-    final jsonCols = List<Map<String, String>>.from(
-        cols.map<Map<String, String>>((ColumnMaker col) => col.toJson()));
-    Map<String, dynamic> arguments = <String, dynamic>{
-      "cols": json.encode(jsonCols)
-    };
+    final jsonCols = List<Map<String, String>>.from(cols.map<Map<String, String>>((ColumnMaker col) => col.toJson()));
+    Map<String, dynamic> arguments = <String, dynamic>{"cols": json.encode(jsonCols)};
     await _channel.invokeMethod("PRINT_ROW", arguments);
   }
 
@@ -149,9 +146,7 @@ class SunmiCloudPrinter {
   ///*printQRCode*
   ///
   ///With this method you can print a qrcode with some errorLevel and size.
-  static Future<void> printQRCode(String data,
-      {int size = 5,
-      SunmiQrcodeLevel errorLevel = SunmiQrcodeLevel.LEVEL_H}) async {
+  static Future<void> printQRCode(String data, {int size = 5, SunmiQrcodeLevel errorLevel = SunmiQrcodeLevel.LEVEL_H}) async {
     int localErrorLevel = 3;
     switch (errorLevel) {
       case SunmiQrcodeLevel.LEVEL_L:
@@ -168,11 +163,7 @@ class SunmiCloudPrinter {
         localErrorLevel = 3;
         break;
     }
-    Map<String, dynamic> arguments = <String, dynamic>{
-      "data": data,
-      'modulesize': size,
-      'errorlevel': localErrorLevel
-    };
+    Map<String, dynamic> arguments = <String, dynamic>{"data": data, 'modulesize': size, 'errorlevel': localErrorLevel};
     await _channel.invokeMethod("PRINT_QRCODE", arguments);
   }
 
@@ -183,8 +174,7 @@ class SunmiCloudPrinter {
       {SunmiBarcodeType barcodeType = SunmiBarcodeType.CODE128,
       int height = 162,
       int width = 2,
-      SunmiBarcodeTextPos textPosition =
-          SunmiBarcodeTextPos.TEXT_ABOVE}) async {
+      SunmiBarcodeTextPos textPosition = SunmiBarcodeTextPos.TEXT_ABOVE}) async {
     int codeType = 8;
     int localTextPosition = 8;
     switch (barcodeType) {

@@ -1,4 +1,4 @@
-package com.example.sunmi_cloud_printer;
+package com.example.lepsi_sunmi_cloud_printer;
 
 
 import android.content.Context;

@@ -1,6 +1,6 @@
-# sunmi_cloud_printer_example
+# lepsi_sunmi_cloud_printer_example
 
-Demonstrates how to use the sunmi_cloud_printer plugin.
+Demonstrates how to use the lepsi_sunmi_cloud_printer plugin.
 
 ## Getting Started
 

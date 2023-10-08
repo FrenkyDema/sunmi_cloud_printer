@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:sunmi_cloud_printer/sunmi_cloud_printer.dart';
+import 'package:lepsi_sunmi_cloud_printer/lepsi_sunmi_cloud_printer.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,12 +38,8 @@ class _MyAppState extends State<MyApp> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Spacer(),
-              ElevatedButton(
-                  onPressed: () async => await SunmiCloudPrinter.connect(),
-                  child: const Text("Connect")),
-              ElevatedButton(
-                  onPressed: () async => await SunmiCloudPrinter.initPrinter(),
-                  child: const Text("Init printer")),
+              ElevatedButton(onPressed: () async => await SunmiCloudPrinter.connect(), child: const Text("Connect")),
+              ElevatedButton(onPressed: () async => await SunmiCloudPrinter.initPrinter(), child: const Text("Init printer")),
               ElevatedButton(
                   onPressed: () async => {
                         await SunmiCloudPrinter.printText("Connection Test !"),
@@ -52,13 +48,11 @@ class _MyAppState extends State<MyApp> {
                   child: const Text("Print connection test")),
               ElevatedButton(
                   onPressed: () async => {
-                    await SunmiCloudPrinter.printQRCode('https://canteen.risto.cloud/api/company/service_status', size: 8),
-                    await SunmiCloudPrinter.lineWrap(3),
-                  },
+                        await SunmiCloudPrinter.printQRCode('https://canteen.risto.cloud/api/company/service_status', size: 8),
+                        await SunmiCloudPrinter.lineWrap(3),
+                      },
                   child: const Text("Print Qrcode test")),
               const Spacer(),
-
-
             ],
           )),
     );

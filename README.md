@@ -1,4 +1,4 @@
-# sunmi_cloud_printer
+# lepsi_sunmi_cloud_printer
 
 A package for 80mm Kitchen Cloud Printer - SUNMI
 
@@ -36,7 +36,7 @@ Widget build(BuildContext context) {
 ## Installation
 
 ```bash
-flutter pub add sunmi_cloud_printer
+flutter pub add lepsi_sunmi_cloud_printer
 ```
 
 ## What this package do

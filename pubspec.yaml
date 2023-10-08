@@ -1,7 +1,7 @@
-name: sunmi_cloud_printer
-description: "Sunmi support package that allows you to easily interface with your cloud printer"
+name: lepsi_sunmi_cloud_printer
+description: "Fork of lepsi_sunmi_cloud_printer, providing better support for Sunmi Cloud Printers."
 version: 0.0.5
-repository: "https://github.com/FrenkyDema/sunmi_cloud_printer"
+repository: "https://github.com/techheavencz/lepsi_sunmi_cloud_printer"
 
 environment:
   sdk: ">=2.18.0 <3.0.0"
@@ -21,5 +21,5 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.example.sunmi_cloud_printer
+        package: com.example.lepsi_sunmi_cloud_printer
         pluginClass: SunmiCloudPrinterPlugin

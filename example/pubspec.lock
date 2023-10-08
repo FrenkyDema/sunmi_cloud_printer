@@ -75,6 +75,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  lepsi_sunmi_cloud_printer:
+    dependency: "direct main"
+    description:
+      path: ".."
+      relative: true
+    source: path
+    version: "0.0.5"
   lints:
     dependency: transitive
     description:
@@ -160,13 +167,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  sunmi_cloud_printer:
-    dependency: "direct main"
-    description:
-      path: ".."
-      relative: true
-    source: path
-    version: "0.0.5"
   term_glyph:
     dependency: transitive
     description:

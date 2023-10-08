@@ -1,4 +1,4 @@
-package com.example.sunmi_cloud_printer;
+package com.example.lepsi_sunmi_cloud_printer;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,7 +26,7 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
      */
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
-        channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "sunmi_cloud_printer");
+        channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "lepsi_sunmi_cloud_printer");
         sunmiCloudPrinterMethod =
                 new SunmiCloudPrinterMethod(flutterPluginBinding.getApplicationContext());
         channel.setMethodCallHandler(this);
