@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:lepsi_sunmi_cloud_printer/lepsi_sunmi_cloud_printer.dart';
+import 'package:lepsi_sunmi_cloud_printer/sunmi_cloud_printer.dart';
 
 void main() {
   runApp(const MyApp());

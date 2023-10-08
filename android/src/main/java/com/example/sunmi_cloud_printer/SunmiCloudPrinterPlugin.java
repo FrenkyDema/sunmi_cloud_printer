@@ -61,6 +61,16 @@ public class SunmiCloudPrinterPlugin implements FlutterPlugin, MethodCallHandler
                 }
                 result.success(true);
             }
+            /// Added by LepsiCity : release method
+            case "RELEASE" -> {
+                try {
+                    sunmiCloudPrinterMethod.release();
+                } catch (Exception ignored) {
+                    result.success(false);
+                    break;
+                }
+                result.success(true);
+            }
             case "INIT_PRINTER" -> {
                 try {
                     sunmiCloudPrinterMethod.printerInit();

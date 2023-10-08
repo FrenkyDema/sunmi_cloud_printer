@@ -34,6 +34,11 @@ class SunmiCloudPrinter {
     await _channel.invokeMethod('CONNECT');
   }
 
+  /// Added by LepsiCity : release method
+  static Future<void> release() async {
+    await _channel.invokeMethod('RELEASE');
+  }
+
   static Future<bool?> initPrinter() async {
     final bool? status = await _channel.invokeMethod('INIT_PRINTER');
     return status;
